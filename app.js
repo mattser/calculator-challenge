@@ -1,10 +1,10 @@
 let pushedNumber = 0;
 let workingNumber = 0;
 let globalOperator = "";
+let hasInitialValue = false;
 
 const buttonPress = (button) => {
   button.addEventListener("click", (event) => {
-    console.log(event.target.id);
     if (event.target.id.includes("num") || event.target.id==="decimal") {
       appendNumberToDisplay(event.target.innerHTML);
     } else if (event.target.id==="clear") {
@@ -13,13 +13,32 @@ const buttonPress = (button) => {
       backspace();
     } else if (event.target.id==="percentage") {
 
+
     } else if (event.target.id==="calculate") {
+
       workingNumber = document.querySelector("h1").innerHTML;
-      document.querySelector("p").innerHTML += workingNumber;
+      document.querySelector("p").innerHTML += ` ${workingNumber} =`;
       document.querySelector("h1").innerHTML = calculate();
       globalOperator = "";
+
     } else {
+      
       selectOperator(event.target.id);
+
+      if (!hasInitialValue) {
+        pushedNumber = document.querySelector("h1").innerHTML;
+        document.querySelector("p").innerHTML = `${pushedNumber} ${globalOperator}`;
+        document.querySelector("h1").innerHTML = "";
+        hasInitialValue = true;
+      } else {
+        workingNumber = document.querySelector("h1").innerHTML;
+        pushedNumber = calculate();
+        document.querySelector("p").innerHTML = `${pushedNumber} ${globalOperator}`;
+        document.querySelector("h1").innerHTML = ""
+        hasInitialValue = true;
+      }
+      console.log(workingNumber);
+      console.log(pushedNumber);
     }
   });
 };
@@ -34,6 +53,7 @@ const clearAll = () => {
   pushedNumber = 0;
   workingNumber = 0;
   globalOperator = "";
+  hasInitialValue = false;
 }
 
 const backspace = () => {
@@ -41,30 +61,20 @@ const backspace = () => {
 }
 
 selectOperator = (operatorType) => {
-    switch(operatorType) {
-      case "addition":
-        globalOperator = "+";
-        break;
-      case "subtraction":
-        globalOperator = "-";
-        break;
-      case "multiplication":
-        globalOperator = "*";
-        break;
-      case "division":
-        globalOperator = "/";
-        break;
-    }
-
-  if (workingNumber==0) {
-    pushedNumber = document.querySelector("h1").innerHTML;
-    document.querySelector("p").innerHTML = `${pushedNumber} ${globalOperator}`;
-    document.querySelector("h1").innerHTML = "";
-  } else {
-    workingNumber = document.querySelector("h1").innerHTML;
-    pushedNumber = calculate();
-    document.querySelector("p").innerHTML = push + globalOperator;
-  }
+  switch(operatorType) {
+    case "addition":
+      globalOperator = "+";
+      break;
+    case "subtraction":
+      globalOperator = "-";
+      break;
+    case "multiplication":
+      globalOperator = "*";
+      break;
+    case "division":
+      globalOperator = "/";
+      break;
+  };
 }
 
 const calculate = () => {
@@ -82,11 +92,10 @@ const calculate = () => {
     case "/":
       result = parseFloat(pushedNumber) / parseFloat(workingNumber);
       break;
-  };
-  workingNumber = 0;
+  }
+  console.log(`Result: ${pushedNumber} ${globalOperator} ${workingNumber}`);
+  hasInitialValue = false;
   return result;
 }
 
 document.querySelectorAll("button").forEach( (button) => buttonPress(button));
-
-document.querySelector("h1").innerHTML = workingNumber;
