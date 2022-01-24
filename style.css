@@ -2,4 +2,34 @@
   margin: 0;
   padding: 0;
 }
+
+.display {
+  text-align: right;
+  padding: 5px;
+  background-color: gray;
+  width: 190px;
+  height: 46px;
+}
+
+.keypad {
+  padding: 5px;
+  width: 190px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 40px 40px 40px 40px;
+      grid-template-columns: 40px 40px 40px 40px;
+  grid-gap: 10px;
+  background-color: black;
+}
+
+button {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+}
+
+button:hover {
+  background-color: gray;
+}
 /*# sourceMappingURL=style.css.map */
