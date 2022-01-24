@@ -63,7 +63,7 @@ selectOperator = (operatorType) => {
   } else {
     workingNumber = document.querySelector("h1").innerHTML;
     pushedNumber = calculate();
-    document.querySelector("p").innerHTML = pushedNumber + globalOperator;
+    document.querySelector("p").innerHTML = push + globalOperator;
   }
 }
 
@@ -84,7 +84,6 @@ const calculate = () => {
       break;
   };
   workingNumber = 0;
-  pushedNumber = result;
   return result;
 }
 
