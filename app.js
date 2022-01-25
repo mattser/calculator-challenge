@@ -6,7 +6,7 @@ const calculator = {
   workingLineNumbers: [],
   answerLineNumber: 0,
   temporaryNumber: "",
-  justPush: false
+  isNegative: false
 }
 
 const buttonPress = (button) => {
@@ -15,20 +15,32 @@ const buttonPress = (button) => {
     if (event.target.id.includes("num") || event.target.id==="decimal") {
         // Pressing Number or Decimal will create an output on the working line
         // It will also start adding to a temporary storage
-        appendValueToWorkingLine(event.target.innerHTML);
-        appendValueToTemporaryNumber(event.target.innerHTML);
+        if (calculator.temporaryNumber.includes(".") && event.target.innerHTML==".") {
+          alert("You already have a decimal")
+        } else {
+          appendValueToWorkingLine(event.target.innerHTML);
+          appendValueToTemporaryNumber(event.target.innerHTML);
+        }
     } else if (event.target.id==="clear") {
         // Clears all variables
         clearAll();
     } else if (event.target.id==="backspace") {
         // Removes the last character in Temporary Number
         backspace();
-    } else if (event.target.id==="percentage") {
-
+    } else if (event.target.id==="plus-minus") {
+        if (calculator.isNegative) {
+          calculator.isNegative = false;
+          makeTemporaryValuePositive();
+        } else 
+        {
+          calculator.isNegative = true;
+          makeTemporaryValueNegative();
+        }
     } else if (event.target.id==="calculate") {
         // Pushes Temporary Number to working Number
         // Takes Both working Numbers and performs the operation on them
         pushTemporaryToWorking();
+        calculator.isNegative = false;
     } else {
         // Appends temporary number to working number. Clears the temporary Number
         // If working Numbers already have 2 values calculate and reset the screen
@@ -38,6 +50,7 @@ const buttonPress = (button) => {
         }
         appendValueToWorkingLine(event.target.innerHTML);
         selectOperator(event.target.id);
+        calculator.isNegative = false;
     }
   });
 };
@@ -101,6 +114,38 @@ const selectOperator = (operatorType) => {
       break;
   };
   console.log(calculator.operator)
+}
+
+const makeTemporaryValueNegative = () => {
+  
+  let temp = calculator.workingLine.innerHTML.split("").slice(0,(-1)*(calculator.temporaryNumber.length));
+  calculator.workingLine.innerHTML = temp.join("");
+  let tempArr = calculator.temporaryNumber.split("");
+  tempArr.unshift("-");
+  console.log(tempArr);
+  calculator.temporaryNumber = tempArr.join("");
+  appendValueToWorkingLine(calculator.temporaryNumber);
+}
+
+const makeTemporaryValuePositive = () => {
+
+  let temp = calculator.workingLine.innerHTML.split("").slice(0,(-1)*(calculator.temporaryNumber.length));
+  calculator.workingLine.innerHTML = temp.join("");
+  let tempArr = calculator.temporaryNumber.split("");
+  tempArr.shift();
+  console.log(tempArr);
+  calculator.temporaryNumber = tempArr.join("");
+  appendValueToWorkingLine(calculator.temporaryNumber);
+}
+
+const backspace = () => {
+  let temp = calculator.workingLine.innerHTML.split("").slice(0,(-1)*(calculator.temporaryNumber.length));
+  calculator.workingLine.innerHTML = temp.join("");
+  let tempArr = calculator.temporaryNumber.split("");
+  tempArr.pop();
+  console.log(tempArr);
+  calculator.temporaryNumber = tempArr.join("");
+  appendValueToWorkingLine(calculator.temporaryNumber);
 }
 
 // A function to push the current temporary value up to the working value;
