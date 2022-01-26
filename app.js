@@ -5,7 +5,8 @@ const calculator = {
   operator: "",
   workingLineNumber: "",
   answerLineNumber: 0,
-  isNegative: false
+  isNegative: false,
+  isDarkMode: true
 }
 
 const buttonPress = (button) => {
@@ -20,12 +21,16 @@ const buttonPress = (button) => {
           appendValueToWorkingLine(event.target.innerHTML);
           appendValueToWorkingLineNumber(event.target.innerHTML);
         }
+    } else if (event.target.id==="light-mode") {
+        document.body.classList.toggle("light-mode");
     } else if (event.target.id==="clear") {
         // Clears all variables
         clearAll();
     } else if (event.target.id==="backspace") {
         // Removes the last character in Temporary Number
         backspace();
+    } else if (event.target.id==="percentage") {
+        makeWorkingValuePercentage();
     } else if (event.target.id==="plus-minus") {
         if (calculator.isNegative) {
           calculator.isNegative = false;
@@ -173,6 +178,13 @@ const backspace = () => {
   tempArr.pop();
   console.log(tempArr);
   calculator.workingLineNumber = tempArr.join("");
+  appendValueToWorkingLine(calculator.workingLineNumber);
+}
+
+const makeWorkingValuePercentage = () => {
+  let temp = calculator.workingLine.innerHTML.split("").slice(0,(-1)*(calculator.workingLineNumber.length));
+  calculator.workingLine.innerHTML = temp.join("");
+  calculator.workingLineNumber = (calculator.workingLineNumber/100);
   appendValueToWorkingLine(calculator.workingLineNumber);
 }
 
