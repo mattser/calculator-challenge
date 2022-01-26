@@ -29,18 +29,16 @@ This allows you to chain calculation, much like you would do on a real calculato
 * Clearing The Whole Calculator
 * Backspacing an element
 * Calculations with decimals
-* Toggling the Working Value to and from a negative value.
-<br />
-<br />
-
-Credits
-=======
-*THERE IS CURRENTLY NOTHING TO CREDIT*
+* Toggling the Working Value to and from a negative value
+* Toggling a value to a percentage divides it by 100
 <br />
 <br />
 
 PREVIEW
 =======
-*THERE IS CURRENTLY NOTHING NO PREVIEW*
+*Normal Preview:* <br />
+![Calculator in dark mode](./screenshots/normal.png)
 <br />
-<br />
+
+*Light Mode Preview*<br />
+![Calculator in light mode](./screenshots/light.png)

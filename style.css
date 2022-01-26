@@ -1,35 +1,74 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  padding-top: 10px;
+  background-color: #202124;
+}
+
+.toggle {
+  text-align: center;
+}
+
+.toggle #light-mode {
+  width: 150px;
 }
 
 .display {
+  margin: 10px auto;
   text-align: right;
-  padding: 5px;
-  background-color: gray;
-  width: 190px;
+  padding: 5px 10px;
+  background-color: #2c2d32;
+  width: 210px;
   height: 46px;
+  border-radius: 10px;
+  color: white;
+  border: 1px solid white;
 }
 
 .keypad {
+  margin: 10px auto;
   padding: 5px;
-  width: 190px;
+  width: 230px;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 40px 40px 40px 40px;
-      grid-template-columns: 40px 40px 40px 40px;
+  -ms-grid-columns: (50px)[4];
+      grid-template-columns: repeat(4, 50px);
   grid-gap: 10px;
-  background-color: black;
 }
 
 button {
-  width: 40px;
+  width: 50px;
   height: 40px;
-  border-radius: 20px;
+  border-radius: 10px;
   border: none;
+  background-color: #13ab7a;
+  color: white;
 }
 
 button:hover {
   background-color: gray;
+}
+
+.light-mode {
+  background-color: #F9E7E7;
+  color: black;
+}
+
+.light-mode .display {
+  background-color: #D2CBCB;
+  color: black;
+}
+
+.light-mode button {
+  background-color: #A8CCC9;
+  color: black;
+}
+
+.light-mode button:hover {
+  background-color: #7EB4AE;
 }
 /*# sourceMappingURL=style.css.map */

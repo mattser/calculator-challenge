@@ -1,29 +1,72 @@
+// Variables
+$darkBackground: #202124;
+$darkButtonGreen: #13ab7a;;
+$darkDisplay: #2c2d32;
+$lightButtonGreen: #A8CCC9;
+$lightButtonGreenHover: #7EB4AE;
+$lightBackground: #F9E7E7;
+$lightDisplay: #D2CBCB;
+
 * {
   margin: 0;
   padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  padding-top: 10px;
+  background-color: $darkBackground;
+}
+.toggle {
+  text-align: center;
+  #light-mode {
+    width: 150px;
+  }
 }
 .display {
+  margin: 10px auto;
   text-align: right;
-  padding: 5px;
-  background-color: gray;
-  width: 190px;
+  padding: 5px 10px;
+  background-color: $darkDisplay;
+  width: 210px;
   height: 46px;
+  border-radius: 10px;
+  color: white;
+  border: 1px solid white;
 } 
 .keypad {
+  margin: 10px auto;
   padding: 5px;
-  width: 190px;
+  width: 230px;
   display: grid;
-  grid-template-columns: 40px 40px 40px 40px;
+  grid-template-columns: repeat(4,50px);
   grid-gap: 10px;
-  background-color: black;
 }
 button {
-  width: 40px;
+  width: 50px;
   height: 40px;
-  border-radius: 20px;
+  border-radius: 10px;
   border: none;
+  background-color: $darkButtonGreen;
+  color: white;
 
   &:hover {
     background-color: gray;
+  }
+}
+
+.light-mode {
+  background-color: $lightBackground;
+  color: black;
+  .display {
+    background-color: $lightDisplay;
+    color: black;
+  }
+  button {
+    background-color: $lightButtonGreen;
+    color: black;
+    &:hover {
+      background-color: $lightButtonGreenHover;
+    }
   }
 }
