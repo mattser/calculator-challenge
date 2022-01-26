@@ -1,3 +1,4 @@
+// Global calculator object
 const calculator = {
   buttons: document.querySelectorAll("button"),
   workingLine: document.querySelector("p"),
@@ -30,50 +31,46 @@ const buttonPress = (button) => {
         // Removes the last character in Temporary Number
         backspace();
     } else if (event.target.id==="percentage") {
+        // Divides the working number by 100
         makeWorkingValuePercentage();
     } else if (event.target.id==="plus-minus") {
+        // Toggles 
         if (calculator.isNegative) {
-          calculator.isNegative = false;
           makeWorkingValuePositive();
-        } else 
-        {
+        } else {
           calculator.isNegative = true;
           makeWorkingValueNegative();
         }
     } else if (event.target.id==="calculate") {
-      // When equal is pressed. Check if there is a running answer value. 
-      // If not set answer value as working value. Reset working value.
-      // If there is a running value perform calculation with running answer and working value. 
-      // Set running answer as the result. Clear working value
-      if (!calculator.answerLineNumber) {
-        console.log("pushing to answerLine");
-        calculator.answerLineNumber = parseFloat(calculator.workingLineNumber);
-        calculator.answerLine.innerHTML = `= ${calculator.answerLineNumber}`;
-        calculator.workingLineNumber = "";
-        calculator.workingLine.innerHTML = calculator.answerLineNumber;
-      } else {
-        console.log("performing Calc and pushing");
-        calculator.workingLineNumber = parseFloat(calculator.workingLineNumber);
-        performCalculation();
-        calculator.workingLineNumber = calculator.answerLineNumber;
-        calculator.answerLineNumber = 0;
-        
-      }
+        // When equal is pressed. Check if there is a running answer value. 
+        // If not set answer value as working value. Reset working value.
+        // If there is a running value perform calculation with running answer and working value. 
+        // Set running answer as the result. Clear working value
+        if (!calculator.answerLineNumber) {
+          calculator.answerLineNumber = parseFloat(calculator.workingLineNumber);
+          calculator.answerLine.innerHTML = `= ${calculator.answerLineNumber}`;
+          calculator.workingLineNumber = "";
+          calculator.workingLine.innerHTML = calculator.answerLineNumber;
+        } else {
+          calculator.workingLineNumber = parseFloat(calculator.workingLineNumber);
+          performCalculation();
+          calculator.workingLineNumber = calculator.answerLineNumber;
+          calculator.answerLineNumber = 0;
+        }
         calculator.isNegative = false;
+
     } else {
       // Check if there is an runningAnswerValue.
       // If not set the Answer Value to the working value. 
       // Set operator to be the operator. Reset working value
       // When operator is pressed, check if there is a runningAnswerValue. 
       if (!calculator.answerLineNumber) {
-        console.log("pushing to answerLine");
         calculator.answerLineNumber = parseFloat(calculator.workingLineNumber);
         calculator.workingLineNumber = "";
         selectOperator(event.target.id);
         calculator.workingLine.innerHTML = calculator.answerLineNumber;
         appendValueToWorkingLine(` ${event.target.innerHTML} `);
       } else {
-        console.log("performing Calc and pushing");
         calculator.workingLineNumber = parseFloat(calculator.workingLineNumber);
         performCalculation();
         calculator.workingLine.innerHTML = calculator.answerLineNumber;
@@ -94,7 +91,6 @@ const appendValueToWorkingLine = (valueToAppend) => {
 // Appends numbers and decimals to the working line variable
 const appendValueToWorkingLineNumber = (valueToAppend) => {
   calculator.workingLineNumber += valueToAppend;
-  console.log(calculator.workingLineNumber)
 }
 // Clears Screens and Variables
 const clearAll = () => {
@@ -119,10 +115,9 @@ const performCalculation = () => {
       result = calculator.answerLineNumber * calculator.workingLineNumber;
       break;
     case "/":
-      result = calculator.answerLineNumber / calculator.workingLineNumbers;
+      result = calculator.answerLineNumber / calculator.workingLineNumber;
       break;
   }
-  console.log(`Result: ${result}`);
   calculator.answerLineNumber = result;
   calculator.workingLineNumber = "";
   calculator.answerLine.innerHTML = `= ${result}`;
@@ -144,47 +139,42 @@ const selectOperator = (operatorType) => {
       calculator.operator = "/";
       break;
   };
-  console.log(calculator.operator);
-  console.log(calculator.answerLineNumber);
-  console.log(calculator.workingLineNumber);
 }
 
 const makeWorkingValueNegative = () => {
-  
-  let temp = calculator.workingLine.innerHTML.split("").slice(0,(-1)*(calculator.workingLineNumberlength));
-  calculator.workingLine.innerHTML = temp.join("");
-  let tempArr = calculator.workingLineNumber.split("");
+  let tempArr = temporaryStringSplitter();
   tempArr.unshift("-");
   console.log(tempArr);
-  calculator.workingLineNumber = tempArr.join("");
-  appendValueToWorkingLine(calculator.workingLineNumber);
+  temporaryStringJoiner(tempArr);
 }
 
 const makeWorkingValuePositive = () => {
-
-  let temp = calculator.workingLine.innerHTML.split("").slice(0,(-1)*(calculator.workingLineNumber.length));
-  calculator.workingLine.innerHTML = temp.join("");
-  let tempArr = calculator.workingLineNumber.split("");
+  calculator.isNegative = false;
+  let tempArr = temporaryStringSplitter();
   tempArr.shift();
-  console.log(tempArr);
-  calculator.workingLineNumber = tempArr.join("");
-  appendValueToWorkingLine(calculator.workingLineNumber);
+  temporaryStringJoiner(tempArr);
 }
 
 const backspace = () => {
-  let temp = calculator.workingLine.innerHTML.split("").slice(0,(-1)*(calculator.workingLineNumber.length));
-  calculator.workingLine.innerHTML = temp.join("");
-  let tempArr = calculator.workingLineNumber.split("");
+  let tempArr = temporaryStringSplitter();
   tempArr.pop();
-  console.log(tempArr);
-  calculator.workingLineNumber = tempArr.join("");
-  appendValueToWorkingLine(calculator.workingLineNumber);
+  temporaryStringJoiner(tempArr);
 }
 
 const makeWorkingValuePercentage = () => {
+  calculator.workingLineNumber = (calculator.workingLineNumber/100);
+  appendValueToWorkingLine("%");
+}
+
+const temporaryStringSplitter = () => {
   let temp = calculator.workingLine.innerHTML.split("").slice(0,(-1)*(calculator.workingLineNumber.length));
   calculator.workingLine.innerHTML = temp.join("");
-  calculator.workingLineNumber = (calculator.workingLineNumber/100);
+  temp = calculator.workingLineNumber.split("");
+  return temp;
+}
+
+const temporaryStringJoiner = (inputArray) => {
+  calculator.workingLineNumber = inputArray.join("");
   appendValueToWorkingLine(calculator.workingLineNumber);
 }
 
