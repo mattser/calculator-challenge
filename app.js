@@ -10,12 +10,13 @@ const calculator = {
   isDarkMode: true
 }
 
+// Main Function Which Listens for a click and Sorts operations
+// Based on Results
 const buttonPress = (button) => {
   button.addEventListener("click", (event) => {
-
+    // Sort Action Code
     if (event.target.id.includes("num") || event.target.id==="decimal") {
-        // Pressing Number or Decimal will create an output on the working line
-        // It will also start adding to a temporary storage
+      // For Number Toggle or adding decimals. Not cannot add additional decimals
         if (calculator.workingLineNumber.includes(".") && event.target.innerHTML==".") {
           alert("You already have a decimal")
         } else {
@@ -23,18 +24,19 @@ const buttonPress = (button) => {
           appendValueToWorkingLineNumber(event.target.innerHTML);
         }
     } else if (event.target.id==="light-mode") {
+      // Light Mode Toggle
         document.body.classList.toggle("light-mode");
     } else if (event.target.id==="clear") {
-        // Clears all variables
+      // Clears all variables
         clearAll();
     } else if (event.target.id==="backspace") {
-        // Removes the last character in Temporary Number
+       // Removes the last character in the Working Number
         backspace();
     } else if (event.target.id==="percentage") {
-        // Divides the working number by 100
+      // Divides the working number by 100
         makeWorkingValuePercentage();
     } else if (event.target.id==="plus-minus") {
-        // Toggles 
+        // Toggles Positive or negative number
         if (calculator.isNegative) {
           makeWorkingValuePositive();
         } else {
@@ -99,6 +101,7 @@ const clearAll = () => {
   calculator.operator = "";
   calculator.workingLineNumber = "";
   calculator.answerLineNumber = 0;
+  calculator.isNegative = false;
 }
 
 // Performs Calculation
@@ -167,7 +170,7 @@ const makeWorkingValuePercentage = () => {
 }
 
 const temporaryStringSplitter = () => {
-  let temp = calculator.workingLine.innerHTML.split("").slice(0,(-1)*(calculator.workingLineNumber.length));
+  let temp = calculator.workingLine.innerHTML.split("").slice(0,(-1)*(1+calculator.workingLineNumber.length));
   calculator.workingLine.innerHTML = temp.join("");
   temp = calculator.workingLineNumber.split("");
   return temp;
