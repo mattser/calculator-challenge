@@ -144,6 +144,7 @@ const selectOperator = (operatorType) => {
   };
 }
 
+// Makes the Current Typing Value Negative
 const makeWorkingValueNegative = () => {
   let tempArr = temporaryStringSplitter();
   tempArr.unshift("-");
@@ -151,6 +152,7 @@ const makeWorkingValueNegative = () => {
   temporaryStringJoiner(tempArr);
 }
 
+// Makes the Current Typing Value Positive
 const makeWorkingValuePositive = () => {
   calculator.isNegative = false;
   let tempArr = temporaryStringSplitter();
@@ -158,17 +160,20 @@ const makeWorkingValuePositive = () => {
   temporaryStringJoiner(tempArr);
 }
 
+// Performs A backspace
 const backspace = () => {
   let tempArr = temporaryStringSplitter();
   tempArr.pop();
   temporaryStringJoiner(tempArr);
 }
 
+// Makes the current Value a Percentage
 const makeWorkingValuePercentage = () => {
   calculator.workingLineNumber = (calculator.workingLineNumber/100);
   appendValueToWorkingLine("%");
 }
 
+// Function because you can't do methods on HTML elements
 const temporaryStringSplitter = () => {
   let temp = calculator.workingLine.innerHTML.split("").slice(0,(-1)*(1+calculator.workingLineNumber.length));
   calculator.workingLine.innerHTML = temp.join("");
@@ -176,9 +181,11 @@ const temporaryStringSplitter = () => {
   return temp;
 }
 
+// Function because you can't do methods on HTML elements
 const temporaryStringJoiner = (inputArray) => {
   calculator.workingLineNumber = inputArray.join("");
   appendValueToWorkingLine(calculator.workingLineNumber);
 }
 
+// The function that basically runs the code
 calculator.buttons.forEach( (button) => buttonPress(button));
