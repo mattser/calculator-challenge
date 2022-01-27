@@ -53,6 +53,12 @@ button:hover {
   background-color: gray;
 }
 
+.easter-egg {
+  margin: auto;
+  text-align: center;
+  color: #202124;
+}
+
 .light-mode {
   background-color: #F9E7E7;
   color: black;
