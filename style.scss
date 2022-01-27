@@ -54,6 +54,11 @@ button {
     background-color: gray;
   }
 }
+.easter-egg {
+  margin: auto;
+  text-align: center;
+  color: $darkBackground;
+}
 
 .light-mode {
   background-color: $lightBackground;
